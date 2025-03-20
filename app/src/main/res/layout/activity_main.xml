@@ -13,7 +13,7 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="14dp">
+        android:layout_margin="10dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topNavbar"
@@ -42,8 +42,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_main_color"
-                app:layout_constraintStart_toEndOf="@id/home_icon"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/home_icon"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -60,7 +60,7 @@
                 android:id="@+id/scrollView_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_margin="26dp">
+                android:layout_margin="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_weatherMonitor"
@@ -73,7 +73,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardView_weather"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="170dp"
                         android:backgroundTint="@color/cardPrimary"
                         app:strokeColor="@android:color/transparent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -115,6 +115,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Energy usage cost this month"
                                 android:textStyle="bold"
+                                android:textSize="12sp"
                                 android:textColor="@color/text_main_color"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +128,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Rp215.750,-"
                                 android:textStyle="bold"
-                                android:textSize="24dp"
+                                android:textSize="20dp"
                                 android:textColor="@color/text_main_color"
                                 app:layout_constraintTop_toBottomOf="@id/title_energyCost"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -171,6 +172,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Total Energy Usage"
                                     android:textStyle="bold"
+                                    android:textSize="12sp"
                                     android:textColor="@color/text_main_color"
                                     android:gravity="center"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -204,6 +206,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Device Energy Usage"
                                     android:textStyle="bold"
+                                    android:textSize="12sp"
                                     android:textColor="@color/text_main_color"
                                     android:gravity="center"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -232,16 +235,182 @@
                         android:text="Routines"
                         android:textColor="@color/text_main_color"
                         android:textStyle="bold"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_routines"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/title_routines"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
 
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardView_home_btn"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/cardSecondary"
+                            app:strokeColor="@android:color/transparent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/cardView_nightMode_btn"
+                            app:layout_constraintBottom_toBottomOf="parent">
 
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/icon_home_btn"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:srcCompat="@drawable/homeicon"
+                                    android:layout_marginBottom="10dp"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/title_home_btn"/>
+
+                                <TextView
+                                    android:id="@+id/title_home_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="I'm Home !"
+                                    android:textColor="@color/text_main_color"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp"
+                                    app:layout_constraintTop_toBottomOf="@id/icon_home_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/text_home_btn"/>
+
+                                <TextView
+                                    android:id="@+id/text_home_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="View Details and Use"
+                                    android:textColor="@color/text_main_color"
+                                    android:textSize="11sp"
+                                    app:layout_constraintTop_toBottomOf="@id/title_home_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardView_nightMode_btn"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/cardSecondary"
+                            app:strokeColor="@android:color/transparent"
+                            android:layout_marginHorizontal="10dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardView_home_btn"
+                            app:layout_constraintEnd_toStartOf="@id/cardView_awayMode_btn"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/icon_nightMode_btn"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:srcCompat="@drawable/nightmodeicon"
+                                    android:layout_marginBottom="10dp"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/title_nightMode_btn"/>
+
+                                <TextView
+                                    android:id="@+id/title_nightMode_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Night Mode"
+                                    android:textColor="@color/text_main_color"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp"
+                                    app:layout_constraintTop_toBottomOf="@id/icon_nightMode_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/text_nightMode_btn"/>
+
+                                <TextView
+                                    android:id="@+id/text_nightMode_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="View Details and Use"
+                                    android:textColor="@color/text_main_color"
+                                    android:textSize="11sp"
+                                    app:layout_constraintTop_toBottomOf="@id/title_nightMode_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardView_awayMode_btn"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/cardSecondary"
+                            app:strokeColor="@android:color/transparent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardView_nightMode_btn"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/icon_awayMode_btn"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:srcCompat="@drawable/awaymodeicon"
+                                    android:layout_marginBottom="10dp"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/title_awayMode_btn"/>
+
+                                <TextView
+                                    android:id="@+id/title_awayMode_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Away Mode"
+                                    android:textColor="@color/text_main_color"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp"
+                                    app:layout_constraintTop_toBottomOf="@id/icon_awayMode_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/text_awayMode_btn"/>
+
+                                <TextView
+                                    android:id="@+id/text_awayMode_btn"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="View Details and Use"
+                                    android:textColor="@color/text_main_color"
+                                    android:textSize="10dp"
+                                    app:layout_constraintTop_toBottomOf="@id/title_awayMode_btn"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
