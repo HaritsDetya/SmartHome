@@ -6,4 +6,10 @@
 <!--    Main App-->
     <color name="start">#379292</color>
     <color name="end">#0E0774</color>
+
+<!--    Card-->
+    <color name="cardPrimary">#1F181818</color>
+
+<!--    Button-->
+    <color name="button_primary">#C0C0C0</color>
 </resources>
