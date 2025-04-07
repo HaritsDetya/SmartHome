@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation">
+
+    <activity
+        android:id="@+id/homeBottomNav"
+        android:name="com.example.dashboardsmarthome.ui.MainActivity"
+        android:label="Home"
+        tools:layout="@layout/activity_main"/>
+
+    <activity
+        android:id="@+id/virtualBottomNav"
+        android:label="Virtual"/>
+
+    <activity
+        android:id="@+id/menuBottomNav"
+        android:label="Menu"/>
 
 </navigation>
