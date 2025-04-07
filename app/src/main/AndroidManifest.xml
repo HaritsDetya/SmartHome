@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,9 @@
             android:name=".BottomNavFrameActivity"
             android:exported="false"
             android:label="@string/title_activity_bottom_nav_frame" />
+        <activity
+            android:name=".EnergyMonitoringActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true" >
