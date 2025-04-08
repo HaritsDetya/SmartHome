@@ -56,4 +56,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Retrofit for API calls
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    // Glide for image loading
+    implementation (libs.glide)
 }

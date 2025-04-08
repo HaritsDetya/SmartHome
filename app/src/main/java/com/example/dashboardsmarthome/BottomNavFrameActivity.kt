@@ -23,7 +23,7 @@ private lateinit var binding: BottomNavFrameBinding
 
         val navController = findNavController(R.id.nav_host_fragment_bottom_nav_frame)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+            R.id.navigation_home, R.id.navigation_virtual, R.id.navigation_menu))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
