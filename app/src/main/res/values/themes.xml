@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- 🔹 Base App Theme -->
     <style name="Base.Theme.DashboardSmartHome" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Customize your app-wide colors here -->
+        <!-- e.g., colorPrimary, fontFamily, etc. -->
     </style>
 
+    <!-- 🔹 Actual App Theme (used after Splash) -->
     <style name="Theme.DashboardSmartHome" parent="Base.Theme.DashboardSmartHome" />
+
+    <!-- 🔹 Splash Theme (used temporarily at launch) -->
+    <style name="Theme.AVARA.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background_light</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+    </style>
 </resources>
