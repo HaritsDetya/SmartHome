@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FF808080</color>
     <color name="grey_light">#ECECEC</color>
     <color name="text_main_color">#FFFFFFFF</color>
 
-<!--    Main App-->
-    <color name="start">#379292</color>
-    <color name="end">#0E0774</color>
+<!--    Home App-->
+    <color name="start_home">#379292</color>
+    <color name="end_home">#0E0774</color>
+
+<!--    Virtual App-->
+    <color name="start_virtual">#4D784E</color>
+    <color name="center_virtual">#686E30</color>
+    <color name="end_virtual">#1D3518</color>
+
+<!--    Menu App-->
+    <color name="start_menu">#6C4D78</color>
+    <color name="center_menu">#471557</color>
+    <color name="end_menu">#311835</color>
 
 <!--    Card-->
     <color name="cardPrimary">#1F181818</color>

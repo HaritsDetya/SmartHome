@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.dashboardsmarthome"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.dashboardsmarthome"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -63,4 +62,6 @@ dependencies {
 
     // Glide for image loading
     implementation (libs.glide)
+
+    implementation(libs.anychart.android)
 }

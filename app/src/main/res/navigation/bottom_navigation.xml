@@ -2,20 +2,26 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bottom_navigation">
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/navigation_home">
 
-    <activity
-        android:id="@+id/homeBottomNav"
-        android:name="com.example.dashboardsmarthome.ui.MainActivity"
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.dashboardsmarthome.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/activity_main"/>
+        tools:layout="@layout/fragment_home"/>
 
-    <activity
-        android:id="@+id/virtualBottomNav"
-        android:label="Virtual"/>
+    <fragment
+        android:id="@+id/navigation_virtual"
+        android:name="com.example.dashboardsmarthome.ui.virtual.VirtualFragment"
+        android:label="Virtual"
+        tools:layout="@layout/fragment_virtual"/>
 
-    <activity
-        android:id="@+id/menuBottomNav"
-        android:label="Menu"/>
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.example.dashboardsmarthome.ui.menu.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu"/>
+
 
 </navigation>
