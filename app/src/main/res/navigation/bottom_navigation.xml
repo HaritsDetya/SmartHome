@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bottom_navigation">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.dashboardsmarthome.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/navigation_virtual"
+        android:name="com.example.dashboardsmarthome.ui.virtual.VirtualFragment"
+        android:label="Virtual"
+        tools:layout="@layout/fragment_virtual"/>
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.example.dashboardsmarthome.ui.menu.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu"/>
+
 
 </navigation>

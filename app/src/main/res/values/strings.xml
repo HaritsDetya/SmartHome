@@ -2,6 +2,10 @@
     <string name="app_name">DashboardSmartHome</string>
 
 <!--    Home Activity-->
+    <string name="title_activity_bottom_nav_frame">BottomNavFrameActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_virtual_3d">Virtual</string>
+    <string name="title_menu">Menu</string>
 
 <!--    Setting Activity-->
 

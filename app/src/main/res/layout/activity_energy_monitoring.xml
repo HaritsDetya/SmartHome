@@ -69,6 +69,15 @@
                 android:textSize="@dimen/normal_text"
                 app:layout_constraintTop_toBottomOf="@id/tv_energy_cost"
                 app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.anychart.AnyChartView
+                android:id="@+id/energy_cost_chart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -124,6 +133,15 @@
                 android:textSize="@dimen/normal_text"
                 app:layout_constraintTop_toBottomOf="@id/tv_energy_usage"
                 app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.anychart.AnyChartView
+                android:id="@+id/energy_usage_chart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
