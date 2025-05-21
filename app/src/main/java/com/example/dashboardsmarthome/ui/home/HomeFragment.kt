@@ -38,8 +38,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val energyCost = binding.cardViewEnergyCost
         val totalEnergyUsage = binding.cardViewTotalEnergyUsage
         val deviceEnergyUsage = binding.cardViewDeviceEnergyUsage
+
+        energyCost.setOnClickListener {
+            val intent = Intent(requireContext(), EnergyMonitoringActivity::class.java)
+            startActivity(intent)
+        }
 
         totalEnergyUsage.setOnClickListener {
             val intent = Intent(requireContext(), EnergyMonitoringActivity::class.java)

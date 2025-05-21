@@ -46,25 +46,36 @@ class EnergyMonitoringActivity : AppCompatActivity() {
         }
 
         databaseListener()
-        readData()
 
         val costChartView = findViewById<AnyChartView>(R.id.energy_cost_chart)
         val usageChartView = findViewById<AnyChartView>(R.id.energy_usage_chart)
 
         setupChart(costChartView, "Total Energy Cost per Month", getCostData())
         setupChart(usageChartView, "Total Energy Usage per Month", getUsageData())
+
     }
 
     private fun databaseListener() {
-        database = FirebaseDatabase.getInstance().getReference()
+        database = FirebaseDatabase.getInstance().getReference("Power")
         val postListener = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val voltage = snapshot.child("Sensor/voltage").value
-                binding.tvEnergyUsage.text = voltage.toString()
+                val current = snapshot.child("current").value
+                val energy = snapshot.child("energy").value
+                val frequency = snapshot.child("frequency").value
+                val powerFactor = snapshot.child("pf").value
+                val power = snapshot.child("power").value
+                val voltage = snapshot.child("voltage").value
+
+                binding.tvCurrentUsage.text = "$current A"
+                binding.tvEnergyUsage.text = "$energy Wh"
+                binding.tvFrequencyUsage.text = "$frequency Hz"
+                binding.tvPowerFactorUsage.text = "$powerFactor"
+                binding.tvPowerUsage.text = "$power W"
+                binding.tvVoltageUsage.text = "$voltage V"
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@EnergyMonitoringActivity, "Failed to read sensor data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EnergyMonitoringActivity, "Failed to read power data", Toast.LENGTH_SHORT).show()
             }
         }
         database.addValueEventListener(postListener)
@@ -112,19 +123,19 @@ class EnergyMonitoringActivity : AppCompatActivity() {
         )
     }
 
-    private fun readData() {
-        database = FirebaseDatabase.getInstance().getReference("Sensor")
-        database.child("voltage").get().addOnSuccessListener {
-            if(it.exists()) {
-                val voltage: Float = it.value.toString().toFloat()
-                Toast.makeText(this, "Successful Voltage Read", Toast.LENGTH_SHORT).show()
-                binding.tvEnergyUsage.text = voltage.toString()
-            } else {
-                Toast.makeText(this, "Sensor/voltage path does not exist", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener {
-            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun readData() {
+//        database = FirebaseDatabase.getInstance().getReference("Power")
+//        database.child("voltage").get().addOnSuccessListener {
+//            if(it.exists()) {
+//                val voltage: Float = it.value.toString().toFloat()
+//                Toast.makeText(this, "Successful Voltage Read", Toast.LENGTH_SHORT).show()
+//                binding.tvEnergyUsage.text = voltage.toString()
+//            } else {
+//                Toast.makeText(this, "Power/voltage path does not exist", Toast.LENGTH_SHORT).show()
+//            }
+//        }.addOnFailureListener {
+//            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
 }
