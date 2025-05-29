@@ -15,4 +15,14 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_pw">16dp</dimen>
 
+    <dimen name="bottom_nav_indicator_width">40dp</dimen>
+    <dimen name="bottom_nav_indicator_height">4dp</dimen>
+    <dimen name="bottom_nav_indicator_height_background">40dp</dimen>
+    <dimen name="bottom_nav_indicator_height_underline">3dp</dimen>
+    <dimen name="bottom_nav_indicator_margin_top">4dp</dimen>
+    <dimen name="bottom_nav_indicator_margin_bottom">4dp</dimen>
+    <dimen name="bottom_nav_indicator_height_total">
+        @dimen/bottom_nav_indicator_height_underline
+    </dimen>
+
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavActiveIndicatorCustom" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:background">#FF0000</item>
+        <item name="android:width">@dimen/bottom_nav_indicator_width</item>
+        <item name="android:height">@dimen/bottom_nav_indicator_height_background</item>
+        <item name="android:insetTop">@dimen/bottom_nav_indicator_margin_top</item>
+        <item name="android:insetBottom">@dimen/bottom_nav_indicator_margin_bottom</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

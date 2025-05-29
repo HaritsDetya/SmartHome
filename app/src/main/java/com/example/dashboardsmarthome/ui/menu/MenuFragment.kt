@@ -7,12 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.dashboardsmarthome.EnergyMonitoringActivity
-import com.example.dashboardsmarthome.R
-import com.example.dashboardsmarthome.databinding.FragmentHomeBinding
+import com.example.dashboardsmarthome.FireNotifActivity
+import com.example.dashboardsmarthome.TandonNotifActivity
 import com.example.dashboardsmarthome.databinding.FragmentMenuBinding
-import com.example.dashboardsmarthome.ui.home.HomeFragment
-import com.example.dashboardsmarthome.ui.home.HomeViewModel
+import com.example.dashboardsmarthome.ui.virtual.VirtualFragment
 
 class MenuFragment : Fragment() {
 
@@ -36,6 +34,20 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.virtualIconMenu.setOnClickListener {
+            val intent = Intent(requireContext(), VirtualFragment::class.java)
+            startActivity(intent)
+        }
+
+        binding.fireNotifLayout.setOnClickListener {
+            val intent = Intent(requireContext(), FireNotifActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tandonNotifLayout.setOnClickListener {
+            val intent = Intent(requireContext(), TandonNotifActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroyView() {

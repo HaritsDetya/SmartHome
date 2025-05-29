@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -32,79 +32,28 @@
                 app:navigationIcon="@drawable/ic_arrow_back_ios_new"
                 app:title="@string/actity_title_energy" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_energy_cost"
+            <TextView
+                android:id="@+id/title_AC"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:orientation="vertical"
-                android:layout_margin="16dp"
+                android:layout_height="wrap_content"
+                android:text="AC"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
                 app:layout_constraintTop_toBottomOf="@id/topAppBar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/tv_energy_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/energy_cost_usage_this_month_text"
-                        android:textSize="18sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_energy_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/tv_energy_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_energy_cost_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_energy_cost"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
-                    <com.anychart.AnyChartView
-                        android:id="@+id/energy_cost_chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_energy_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
                 android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/cardView_energy_cost"
+                app:layout_constraintTop_toBottomOf="@id/title_AC"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -120,8 +69,7 @@
                         android:text="Energy Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_energy_usage"
@@ -129,43 +77,21 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="150.52 kWh"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_energy_usage_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_energy_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_energy_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
-                    <com.anychart.AnyChartView
-                        android:id="@+id/energy_usage_chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_readData"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Read Data"
-                        android:layout_marginTop="20dp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_energy_usage_compare"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:id="@+id/btn_readData"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Read Data"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/tv_energy_usage_compare"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"/>-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,7 +100,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_current_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
@@ -195,8 +121,7 @@
                         android:text="Current Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_current_usage"
@@ -204,24 +129,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
                         android:textSize="18sp"
                         android:textStyle="bold"
+                        android:text="Current Usage"
                         app:layout_constraintTop_toBottomOf="@id/tv_current_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_current_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_current_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -230,7 +142,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_frequency_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
@@ -251,8 +163,7 @@
                         android:text="Frequency Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_frequency_usage"
@@ -260,24 +171,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_frequency_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_frequency_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_frequency_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -286,7 +183,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_power_factor_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
@@ -307,8 +204,7 @@
                         android:text="Power Factor Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_power_factor_usage"
@@ -316,24 +212,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_power_factor_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_power_factor_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_power_factor_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -342,7 +224,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_power_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
@@ -363,8 +245,7 @@
                         android:text="Power Factor Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_power_usage"
@@ -372,24 +253,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_power_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_power_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_power_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -398,7 +265,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_voltage_usage"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 android:orientation="vertical"
@@ -419,8 +286,7 @@
                         android:text="Voltage Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_voltage_usage"
@@ -428,28 +294,27 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
-                        android:text="RP. 123456789"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_voltage_title"
-                        app:layout_constraintStart_toStartOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_voltage_usage_compare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="You save Rp. 123456 Compared to last month"
-                        android:textSize="@dimen/normal_text"
-                        app:layout_constraintTop_toBottomOf="@id/tv_voltage_usage"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title_DC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DC"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@id/cardView_voltage_usage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

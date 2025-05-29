@@ -51,10 +51,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:itemIconTint="@color/button_primary"
+        app:itemIconTint="@color/white"
         app:itemTextColor="@color/nav_item_color"
-        app:itemBackground="@drawable/nav_item_background"
-        app:menu="@menu/bottom_nav_menu" />
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
+        app:itemRippleColor="@color/start_home"
+        app:itemPaddingTop="10dp"
+        app:itemPaddingBottom="10dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="selected"/>
 
     <!-- Fragment Container View for navigation -->
     <androidx.fragment.app.FragmentContainerView

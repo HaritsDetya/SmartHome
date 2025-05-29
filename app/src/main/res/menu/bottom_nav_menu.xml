@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/navigation_virtual"
-        android:icon="@drawable/_dcubeicon"
-        android:title="@string/title_virtual_3d"/>
+        android:icon="@drawable/sensor_triangle_exclamation_svgrepo_com"
+        android:title="@string/title_ews"/>
 
     <item
         android:id="@+id/navigation_menu"

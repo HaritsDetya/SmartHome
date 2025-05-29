@@ -6,6 +6,9 @@
     <color name="grey_light">#ECECEC</color>
     <color name="text_main_color">#FFFFFFFF</color>
 
+    <color name="card_on">#FFEB3B</color>
+    <color name="card_off">#313131</color>
+
 <!--    Home App-->
     <color name="start_home">#379292</color>
     <color name="end_home">#0E0774</color>

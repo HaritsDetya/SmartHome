@@ -5,6 +5,17 @@
         <!-- e.g., colorPrimary, fontFamily, etc. -->
     </style>
 
+    <style name="Theme.BottomNavigation" parent="Base.Theme.DashboardSmartHome" />
+    
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/start_home</item>
+        <item name="android:width">@dimen/bottom_nav_indicator_width</item>
+        <item name="android:height">@dimen/bottom_nav_indicator_height_background</item>
+        <item name="android:insetTop">@dimen/bottom_nav_indicator_margin_top</item>
+        <item name="android:insetBottom">@dimen/bottom_nav_indicator_margin_bottom</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <!-- 🔹 Actual App Theme (used after Splash) -->
     <style name="Theme.DashboardSmartHome" parent="Base.Theme.DashboardSmartHome" />
 

@@ -1,19 +1,18 @@
 <resources>
-    <string name="app_name">DashboardSmartHome</string>
+    <string name="app_name">AVARA Mobile App</string>
 
-<!--    Home Activity-->
+    <!--    Home Activity-->
     <string name="title_activity_bottom_nav_frame">BottomNavFrameActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_virtual_3d">Virtual</string>
+    <string name="title_ews">EWS</string>
     <string name="title_menu">Menu</string>
 
-<!--    Setting Activity-->
+    <!--    Setting Activity-->
 
-<!--    Energy Activity-->
+    <!--    Energy Activity-->
 
 
-
-<!--    Energy Monitoring Text Resource-->
+    <!--    Energy Monitoring Text Resource-->
     <string name="actity_title_energy">Energy</string>
     <string name="energy_cost_usage_this_month_text">Energy usage cost this month</string>
     <string name="energy_cost_usage_last_month_text">Using less than the same period last month</string>

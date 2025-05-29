@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_virtual"
         android:name="com.example.dashboardsmarthome.ui.virtual.VirtualFragment"
-        android:label="Virtual"
+        android:label="EWS"
         tools:layout="@layout/fragment_virtual"/>
 
     <fragment
