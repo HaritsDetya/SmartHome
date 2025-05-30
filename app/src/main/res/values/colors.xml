@@ -26,6 +26,7 @@
 <!--    Card-->
     <color name="cardPrimary">#1F181818</color>
     <color name="cardSecondary">#313131</color>
+    <color name="cardThird">#42FFFFFF</color>
 
 <!--    Button-->
     <color name="button_primary">#C0C0C0</color>

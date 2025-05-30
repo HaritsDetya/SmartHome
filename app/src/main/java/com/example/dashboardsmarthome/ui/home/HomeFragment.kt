@@ -73,17 +73,30 @@ class HomeFragment : Fragment() {
                         binding.day7WeatherIcon
                     )
 
+                    val temperatureTexts = listOf(
+                        binding.day1TemperatureText,
+                        binding.day2TemperatureText,
+                        binding.day3TemperatureText,
+                        binding.day4TemperatureText,
+                        binding.day5TemperatureText,
+                        binding.day6TemperatureText,
+                        binding.day7TemperatureText
+                    )
+
                     val forecastsForIcons = allFlattenedForecasts.take(NUMBER_OF_HOURLY_FORECAST_ICONS)
 
-                    for (i in 0 until forecastsForIcons.size) {
+                    for (i in forecastsForIcons.indices) {
                         val forecastItem = forecastsForIcons[i]
                         val iconResId = getWeatherIconResId(forecastItem.weatherDesc)
                         icons[i].setImageResource(iconResId)
+                        temperatureTexts[i].text = "${forecastItem.t}°C"
                     }
 
                     for (i in forecastsForIcons.size until icons.size) {
                         icons[i].setImageResource(R.drawable.cloud)
+                        temperatureTexts[i].text = "--°C"
                     }
+
 
                 } else {
                     Log.e("HomeFragment", "Weather data wrapper or cuaca list is empty.")

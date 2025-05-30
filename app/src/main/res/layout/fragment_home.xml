@@ -49,7 +49,7 @@
                         android:id="@+id/home_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Home 1"
+                        android:text="My Home"
                         android:paddingStart="10dp"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -102,7 +102,7 @@
                                     android:id="@+id/mainWeatherText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="18"
+                                    android:text="18°C"
                                     android:textSize="34sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold"
@@ -148,6 +148,18 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"/>
 
+                                <TextView
+                                    android:id="@+id/day1TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day1WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day1WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day1WeatherIcon"/>
+
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day2WeatherIcon"
                                     android:layout_width="35dp"
@@ -155,6 +167,18 @@
                                     android:layout_marginStart="8dp"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day1WeatherIcon"/>
+
+                                <TextView
+                                    android:id="@+id/day2TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day2WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day2WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day2WeatherIcon"/>
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day3WeatherIcon"
@@ -164,6 +188,18 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day2WeatherIcon"/>
 
+                                <TextView
+                                    android:id="@+id/day3TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day3WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day3WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day3WeatherIcon"/>
+
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day4WeatherIcon"
                                     android:layout_width="35dp"
@@ -171,6 +207,18 @@
                                     android:layout_marginStart="8dp"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day3WeatherIcon"/>
+
+                                <TextView
+                                    android:id="@+id/day4TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day4WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day4WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day4WeatherIcon"/>
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day5WeatherIcon"
@@ -180,6 +228,18 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day4WeatherIcon"/>
 
+                                <TextView
+                                    android:id="@+id/day5TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day5WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day5WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day5WeatherIcon"/>
+
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day6WeatherIcon"
                                     android:layout_width="35dp"
@@ -188,6 +248,18 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day5WeatherIcon"/>
 
+                                <TextView
+                                    android:id="@+id/day6TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day6WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day6WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day6WeatherIcon"/>
+
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/day7WeatherIcon"
                                     android:layout_width="35dp"
@@ -195,6 +267,18 @@
                                     android:layout_marginStart="8dp"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/day6WeatherIcon"/>
+
+                                <TextView
+                                    android:id="@+id/day7TemperatureText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--°C"
+                                    android:textSize="12sp"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    app:layout_constraintTop_toBottomOf="@id/day7WeatherIcon"
+                                    app:layout_constraintStart_toStartOf="@id/day7WeatherIcon"
+                                    app:layout_constraintEnd_toEndOf="@id/day7WeatherIcon"/>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -401,11 +485,7 @@
                             android:id="@+id/cardView_home_btn"
                             android:layout_width="110dp"
                             android:layout_height="wrap_content"
-                            app:strokeColor="@android:color/transparent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/cardView_nightMode_btn"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            app:strokeColor="@android:color/transparent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -429,7 +509,7 @@
                                     android:text="1st Floor"
                                     android:textColor="@color/text_main_color"
                                     android:textStyle="bold"
-                                    android:textSize="14sp"
+                                    android:textSize="16sp"
                                     app:layout_constraintTop_toBottomOf="@id/icon_home_btn"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -455,11 +535,7 @@
                             android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             app:strokeColor="@android:color/transparent"
-                            android:layout_marginHorizontal="10dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/cardView_home_btn"
-                            app:layout_constraintEnd_toStartOf="@id/cardView_awayMode_btn"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            android:layout_marginHorizontal="10dp">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -483,7 +559,7 @@
                                     android:text="2nd Floor"
                                     android:textColor="@color/text_main_color"
                                     android:textStyle="bold"
-                                    android:textSize="14sp"
+                                    android:textSize="16sp"
                                     app:layout_constraintTop_toBottomOf="@id/icon_nightMode_btn"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -508,11 +584,7 @@
                             android:id="@+id/cardView_awayMode_btn"
                             android:layout_width="110dp"
                             android:layout_height="wrap_content"
-                            app:strokeColor="@android:color/transparent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/cardView_nightMode_btn"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            app:strokeColor="@android:color/transparent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -536,7 +608,7 @@
                                     android:text="Motor"
                                     android:textColor="@color/text_main_color"
                                     android:textStyle="bold"
-                                    android:textSize="14sp"
+                                    android:textSize="16sp"
                                     app:layout_constraintTop_toBottomOf="@id/icon_awayMode_btn"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -548,7 +620,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="View Details and Use"
                                     android:textColor="@color/text_main_color"
-                                    android:textSize="10dp"
+                                    android:textSize="11dp"
                                     app:layout_constraintTop_toBottomOf="@id/title_awayMode_btn"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -556,6 +628,18 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </com.google.android.material.card.MaterialCardView>
+
+                        <androidx.constraintlayout.helper.widget.Flow
+                            android:id="@+id/flow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="cardView_home_btn,cardView_nightMode_btn,cardView_awayMode_btn"
+                            app:flow_wrapMode="chain"
+                            app:flow_horizontalGap="8dp"
+                            app:flow_verticalGap="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

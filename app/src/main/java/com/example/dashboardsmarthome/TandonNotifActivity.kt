@@ -24,7 +24,7 @@ class TandonNotifActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var binding: ActivityTandonNotifBinding
     private val channelId = "water_tank_alert_channel"
-    private val notificationId = 101
+    private val notificationId = 102
     private var firebaseConnected = true
     private var lastDataReceivedTime: Long = System.currentTimeMillis()
     private var dummyAlarmTriggered = false

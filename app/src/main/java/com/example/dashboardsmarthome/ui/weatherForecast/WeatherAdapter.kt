@@ -13,6 +13,23 @@ import java.util.Locale
 class WeatherAdapter(private var listCuaca: List<Cuaca>) :
     RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
+    companion object {
+        fun getWeatherIconResId(weatherDesc: String): Int {
+            return when {
+                weatherDesc.contains("Cerah", ignoreCase = true) -> R.drawable.sun
+                weatherDesc.contains("Berawan", ignoreCase = true) || weatherDesc.contains("Mendung", ignoreCase = true) -> R.drawable.cloud
+                weatherDesc.contains("Hujan Ringan", ignoreCase = true) -> R.drawable.rain
+                weatherDesc.contains("Hujan Sedang", ignoreCase = true) || weatherDesc.contains("Hujan Lebat", ignoreCase = true) -> R.drawable.rain
+                weatherDesc.contains("Hujan Petir", ignoreCase = true) || weatherDesc.contains("Guntur", ignoreCase = true) -> R.drawable.storm
+                weatherDesc.contains("Kabut", ignoreCase = true) -> R.drawable.cloud_fog
+                weatherDesc.contains("Asap", ignoreCase = true) -> R.drawable.cloud_fog
+                weatherDesc.contains("Cerah Berawan", ignoreCase = true) -> R.drawable.cloud
+                else -> R.drawable.cloud_drizzle
+            }
+        }
+    }
+
+
     inner class ViewHolder(private val binding: ItemForecastBinding) : RecyclerView.ViewHolder(binding.root) {
         val waktu = binding.weatherDate
         val suhu = binding.weatherSuhu
@@ -59,19 +76,5 @@ class WeatherAdapter(private var listCuaca: List<Cuaca>) :
     fun updateData(newListCuaca: List<Cuaca>) {
         listCuaca = newListCuaca
         notifyDataSetChanged()
-    }
-
-    private fun getWeatherIconResId(weatherDesc: String): Int {
-        return when {
-            weatherDesc.contains("Cerah", ignoreCase = true) -> R.drawable.sun
-            weatherDesc.contains("Berawan", ignoreCase = true) || weatherDesc.contains("Mendung", ignoreCase = true) -> R.drawable.cloud
-            weatherDesc.contains("Hujan Ringan", ignoreCase = true) -> R.drawable.rain
-            weatherDesc.contains("Hujan Sedang", ignoreCase = true) || weatherDesc.contains("Hujan Lebat", ignoreCase = true) -> R.drawable.rain
-            weatherDesc.contains("Hujan Petir", ignoreCase = true) || weatherDesc.contains("Guntur", ignoreCase = true) -> R.drawable.storm
-            weatherDesc.contains("Kabut", ignoreCase = true) -> R.drawable.cloud_fog
-            weatherDesc.contains("Asap", ignoreCase = true) -> R.drawable.cloud_fog
-            weatherDesc.contains("Cerah Berawan", ignoreCase = true) -> R.drawable.cloud_drizzle
-            else -> R.drawable.cloud
-        }
     }
 }

@@ -15,19 +15,17 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.core.app.NotificationCompat
-import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dashboardsmarthome.BottomNavFrameActivity
-import com.example.dashboardsmarthome.FireNotifActivity
 import com.example.dashboardsmarthome.R
-import com.example.dashboardsmarthome.databinding.ActivityFireNotifBinding
 import com.example.dashboardsmarthome.databinding.ActivityWeatherForecastBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 class WeatherForecastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWeatherForecastBinding
@@ -35,25 +33,27 @@ class WeatherForecastActivity : AppCompatActivity() {
     private lateinit var adapter: WeatherAdapter
 
     private lateinit var database: DatabaseReference
-    private val channelId = "rain_alert_channel"
+    private val channelId = "weather_alert_channel"
     private val notificationId = 103
     private var firebaseConnected = true
     private var lastDataReceivedTime: Long = System.currentTimeMillis()
     private var dummyAlarmTriggered = false
+    private var latestWeatherDescription: String? = null
+    private var lastNotifiedWeatherDescription: String? = null
 
     private val handler = Handler(Looper.getMainLooper())
-    private val dummyRunnable = object : Runnable {
-        override fun run() {
-            val timeSinceLastData = System.currentTimeMillis() - lastDataReceivedTime
-
-            if (timeSinceLastData > 1_000 && !dummyAlarmTriggered) {
-                showNotification("Peringatan Hujan", "Sensor lokal mendeteksi potensi hujan!")
-                dummyAlarmTriggered = true
-            }
-
-            handler.postDelayed(this, 1_000)
-        }
-    }
+//    private val dummyRunnable = object : Runnable {
+//        override fun run() {
+//            val timeSinceLastData = System.currentTimeMillis() - lastDataReceivedTime
+//
+//            if (timeSinceLastData > 1_000 && !dummyAlarmTriggered) {
+//                showNotification("Peringatan Hujan (Dummy)", "Sensor lokal mendeteksi potensi hujan!")
+//                dummyAlarmTriggered = true
+//            }
+//
+//            handler.postDelayed(this, 1_000)
+//        }
+//    }
 
     private val MAX_FORECAST_ITEMS_TO_DISPLAY = 7
 
@@ -76,11 +76,12 @@ class WeatherForecastActivity : AppCompatActivity() {
 
         val adm4Code = intent.getStringExtra("adm4_code") ?: "34.04.07.2001"
 
+        createNotificationChannel()
+
         observeViewModel()
         viewModel.getWeatherForecast(adm4Code)
 
-        database = FirebaseDatabase.getInstance().getReference("FireAlert")
-        createNotificationChannel()
+        database = FirebaseDatabase.getInstance().getReference("WeatherAlert")
 
         database.child("detected").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -89,17 +90,18 @@ class WeatherForecastActivity : AppCompatActivity() {
                 dummyAlarmTriggered = false
 
                 if (detected == true) {
-                    showNotification("Peringatan Hujan!", "Sensor mendeteksi potensi Hujan!")
+                    sendWeatherNotification(latestWeatherDescription)
                 }
             }
 
 
             override fun onCancelled(error: DatabaseError) {
                 firebaseConnected = false
+                Log.e("WeatherForecast", "Firebase connection cancelled: ${error.message}")
             }
         })
 
-        handler.postDelayed(dummyRunnable, 1000)
+//        handler.postDelayed(dummyRunnable, 1000)
     }
 
     private fun observeViewModel() {
@@ -116,6 +118,11 @@ class WeatherForecastActivity : AppCompatActivity() {
 
                     if (forecastsToDisplay.isNotEmpty()) {
                         adapter.updateData(forecastsToDisplay)
+
+                        latestWeatherDescription = forecastsToDisplay.first().weatherDesc
+
+                        sendWeatherNotification(latestWeatherDescription)
+
                         binding.recyclerViewForecast.visibility = View.VISIBLE
                         supportActionBar?.title = "${weatherResponse.lokasi.desa}, ${weatherResponse.lokasi.kotkab}"
                         binding.textEmptyMessage.visibility = View.GONE
@@ -131,18 +138,65 @@ class WeatherForecastActivity : AppCompatActivity() {
         }
     }
 
+    private fun sendWeatherNotification(weatherDesc: String?) {
+        if (weatherDesc == null || weatherDesc == lastNotifiedWeatherDescription) {
+            return
+        }
+
+        val title: String
+        val message: String
+        val smallIconResId: Int
+
+        when (weatherDesc.lowercase(Locale.ROOT)) {
+            "cerah", "cerah berawan" -> {
+                title = "Cuaca Cerah!"
+                message = "Cuaca saat ini sedang cerah, semoga hari Anda cerah selalu!"
+                smallIconResId = R.drawable.sun
+            }
+            "berawan", "berawan tebal" -> {
+                title = "Cuaca Berawan"
+                message = "Cuaca saat ini sedang berawan, rasakan angin segar saat beraktifitas."
+                smallIconResId = R.drawable.cloud
+            }
+            "hujan ringan", "hujan sedang", "hujan lebat", "hujan petir" -> {
+                title = "Peringatan Hujan!"
+                message = "BMKG memperkirakan potensi hujan hari ini di wilayah Anda."
+                smallIconResId = R.drawable.rain
+            }
+            "kabut" -> {
+                title = "Waspada Kabut"
+                message = "Cuaca berkabut, harap berhati-hati saat berkendara."
+                smallIconResId = R.drawable.cloud_fog
+            }
+            "asap", "polusi" -> { // Asumsi jika ada deskripsi polusi
+                title = "Kualitas Udara"
+                message = "Kualitas udara kurang baik, disarankan mengurangi aktivitas di luar ruangan."
+                smallIconResId = R.drawable.cloud_fog
+            }
+            else -> {
+                title = "Informasi Cuaca"
+                message = "Cuaca saat ini: $weatherDesc."
+                smallIconResId = R.drawable.cloud_drizzle
+            }
+        }
+
+        lastNotifiedWeatherDescription = weatherDesc
+
+        showNotification(title, message, smallIconResId)
+    }
+
     private fun showEmptyMessage(message: String) {
         binding.recyclerViewForecast.visibility = View.GONE
         binding.textEmptyMessage.visibility = View.VISIBLE
         binding.textEmptyMessage.text = message
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(dummyRunnable)
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        handler.removeCallbacks(dummyRunnable)
+//    }
 
-    private fun showNotification(title: String, message: String) {
+    private fun showNotification(title: String, message: String, smallIconResId: Int) {
         val intent = Intent(this, WeatherForecastActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -153,7 +207,7 @@ class WeatherForecastActivity : AppCompatActivity() {
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 0, fullScreenIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.rain)
+            .setSmallIcon(smallIconResId)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -170,8 +224,8 @@ class WeatherForecastActivity : AppCompatActivity() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Rain Alert Channel"
-            val description = "Channel untuk notifikasi hujan"
+            val name = "Weather Alert Channel"
+            val description = "Channel untuk notifikasi perkiraan cuaca"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, name, importance).apply {
                 this.description = description
