@@ -13,7 +13,9 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.example.dashboardsmarthome.dataAPI.NotificationHistoryManager
 import com.example.dashboardsmarthome.databinding.ActivityTandonNotifBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -48,14 +50,26 @@ class TandonNotifActivity : AppCompatActivity() {
         binding = ActivityTandonNotifBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        createNotificationChannel()
+
+        NotificationHistoryManager.init(applicationContext)
+
+        if (intent.getBooleanExtra("trigger_water_notification", false)) {
+            showNotification("Tandon Penuh!", "Tandon air dipicu secara manual.")
+            finish()
+        }
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
+
         binding.topAppBar.setNavigationOnClickListener {
             val intent = Intent(this, BottomNavFrameActivity::class.java)
+            intent.putExtra("start_destination", "ews")
             startActivity(intent)
             finish()
         }
 
         database = FirebaseDatabase.getInstance().getReference("WaterTankAlert")
-        createNotificationChannel()
 
         database.child("detected").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -106,6 +120,8 @@ class TandonNotifActivity : AppCompatActivity() {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationId, notification)
+
+        NotificationHistoryManager.addNotificationToHistory("Tandon Air", message)
     }
 
     private fun createNotificationChannel() {

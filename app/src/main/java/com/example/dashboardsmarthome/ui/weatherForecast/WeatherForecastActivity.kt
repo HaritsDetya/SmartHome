@@ -19,7 +19,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dashboardsmarthome.BottomNavFrameActivity
 import com.example.dashboardsmarthome.R
+import com.example.dashboardsmarthome.dataAPI.NotificationHistoryManager
 import com.example.dashboardsmarthome.databinding.ActivityWeatherForecastBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -62,21 +64,33 @@ class WeatherForecastActivity : AppCompatActivity() {
         binding = ActivityWeatherForecastBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        createNotificationChannel()
+
+        NotificationHistoryManager.init(applicationContext)
+
+        if (intent.getBooleanExtra("trigger_weather_notification", false)) {
+            val weatherDesc = intent.getStringExtra("weather_description") ?: "Tidak diketahui"
+            sendWeatherNotification(weatherDesc)
+            finish()
+        }
+
         viewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
         adapter = WeatherAdapter(emptyList())
 
         binding.recyclerViewForecast.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewForecast.adapter = adapter
 
+        val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
+
         binding.topAppBar.setNavigationOnClickListener {
             val intent = Intent(this, BottomNavFrameActivity::class.java)
+            intent.putExtra("start_destination", "ews")
             startActivity(intent)
             finish()
         }
 
         val adm4Code = intent.getStringExtra("adm4_code") ?: "34.04.07.2001"
-
-        createNotificationChannel()
 
         observeViewModel()
         viewModel.getWeatherForecast(adm4Code)
@@ -90,7 +104,11 @@ class WeatherForecastActivity : AppCompatActivity() {
                 dummyAlarmTriggered = false
 
                 if (detected == true) {
-                    sendWeatherNotification(latestWeatherDescription)
+                    latestWeatherDescription?.let {
+                        sendWeatherNotification(it)
+                    } ?: run {
+                        Log.w("WeatherForecast", "Detected true from Firebase but latestWeatherDescription is null.")
+                    }
                 }
             }
 
@@ -220,6 +238,8 @@ class WeatherForecastActivity : AppCompatActivity() {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationId, notification)
+
+        NotificationHistoryManager.addNotificationToHistory("Cuaca", message)
     }
 
     private fun createNotificationChannel() {

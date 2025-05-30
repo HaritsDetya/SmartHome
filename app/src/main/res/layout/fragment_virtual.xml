@@ -105,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Lorem"
+                        android:text="Weather"
                         android:textColor="@android:color/white"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Lorem"
+                        android:text="Fire"
                         android:textColor="@android:color/white"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -139,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Lorem"
+                        android:text="Water Tank"
                         android:textColor="@android:color/white"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -156,7 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Lorem"
+                        android:text="Clear Log"
                         android:textColor="@android:color/white"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -174,9 +174,10 @@
                         android:id="@+id/securityLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Security Log"
+                        android:text="Notification Log"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
+                        android:textSize="20sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"/>
@@ -184,7 +185,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/log1"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="8dp"
                         app:strokeColor="@android:color/transparent"
@@ -198,7 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:paddingStart="8dp"
+                            android:padding="8dp"
                             android:text="Log Entry 1"
                             android:textColor="@color/white"/>
 
@@ -207,7 +208,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/log2"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="8dp"
                         app:strokeColor="@android:color/transparent"
@@ -221,7 +222,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:paddingStart="8dp"
+                            android:padding="8dp"
                             android:text="Log Entry 2"
                             android:textColor="@color/white"/>
 
@@ -230,7 +231,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/log3"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="8dp"
                         app:strokeColor="@android:color/transparent"
@@ -244,7 +245,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:paddingStart="8dp"
+                            android:padding="8dp"
                             android:text="Log Entry 3"
                             android:textColor="@color/white"/>
 
@@ -253,7 +254,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/log4"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="8dp"
                         app:strokeColor="@android:color/transparent"
@@ -267,7 +268,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:paddingStart="8dp"
+                            android:padding="8dp"
                             android:text="Log Entry 4"
                             android:textColor="@color/white"/>
 

@@ -36,6 +36,9 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val email = "standingmendoan"
+        binding.subUsername.text = "@$email"
+
         binding.fireNotifLayout.setOnClickListener {
             val intent = Intent(requireContext(), FireNotifActivity::class.java)
             startActivity(intent)

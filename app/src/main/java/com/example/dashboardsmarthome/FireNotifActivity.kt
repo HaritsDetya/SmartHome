@@ -10,7 +10,9 @@ import android.media.RingtoneManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.example.dashboardsmarthome.dataAPI.NotificationHistoryManager
 import com.example.dashboardsmarthome.databinding.ActivityFireNotifBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.*
 
 class FireNotifActivity : AppCompatActivity() {
@@ -41,14 +43,26 @@ class FireNotifActivity : AppCompatActivity() {
         binding = ActivityFireNotifBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        createNotificationChannel()
+
+        NotificationHistoryManager.init(applicationContext)
+
+        if (intent.getBooleanExtra("trigger_fire_notification", false)) {
+            showNotification("Peringatan Kebakaran!", "Alarm kebakaran dipicu secara manual.")
+            finish()
+        }
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
+
         binding.topAppBar.setNavigationOnClickListener {
             val intent = Intent(this, BottomNavFrameActivity::class.java)
+            intent.putExtra("start_destination", "ews")
             startActivity(intent)
             finish()
         }
 
         database = FirebaseDatabase.getInstance().getReference("FireAlert")
-        createNotificationChannel()
 
         database.child("detected").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -99,6 +113,8 @@ class FireNotifActivity : AppCompatActivity() {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationId, notification)
+
+        NotificationHistoryManager.addNotificationToHistory("Kebakaran", message)
     }
 
     private fun createNotificationChannel() {

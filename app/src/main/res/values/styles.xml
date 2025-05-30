@@ -8,4 +8,9 @@
         <item name="android:insetBottom">@dimen/bottom_nav_indicator_margin_bottom</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="ToolbarTitleBold" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

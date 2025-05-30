@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.example.dashboardsmarthome.databinding.BottomNavFrameBinding
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -64,5 +65,23 @@ class BottomNavFrameActivity : AppCompatActivity() {
             }
         }
 
+        val startDestinationExtra = intent.getStringExtra("start_destination")
+        if (!startDestinationExtra.isNullOrEmpty()) {
+            val destinationId = when (startDestinationExtra) {
+                "home" -> R.id.navigation_home
+                "ews" -> R.id.navigation_virtual
+                "menu" -> R.id.navigation_menu
+                else -> -1
+            }
+
+            if (destinationId != -1 && navController.currentDestination?.id != destinationId) {
+                navController.navigate(destinationId, null, navOptions {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                })
+                binding.navView.selectedItemId = destinationId
+            }
+        }
     }
 }

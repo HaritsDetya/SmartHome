@@ -8,6 +8,7 @@ import com.example.dashboardsmarthome.databinding.ActivityEnergyMonitoringBindin
 import com.google.firebase.database.*
 import android.os.Handler
 import android.os.Looper
+import com.google.android.material.appbar.MaterialToolbar
 import kotlin.random.Random
 
 class EnergyMonitoringActivity : AppCompatActivity() {
@@ -30,6 +31,9 @@ class EnergyMonitoringActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         database = FirebaseDatabase.getInstance().getReference("Power")
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
 
         binding.topAppBar.setNavigationOnClickListener {
             val intent = Intent(this, BottomNavFrameActivity::class.java)
