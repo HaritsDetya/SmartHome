@@ -54,11 +54,10 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/nav_item_color"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        app:itemRippleColor="@color/start_home"
-        app:itemPaddingTop="10dp"
-        app:itemPaddingBottom="10dp"
+        app:itemRippleColor="#D7D7D7"
+        app:itemBackground="@drawable/bottom_nav_item_background"
         app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="selected"/>
+        app:labelVisibilityMode="labeled"/>
 
     <!-- Fragment Container View for navigation -->
     <androidx.fragment.app.FragmentContainerView

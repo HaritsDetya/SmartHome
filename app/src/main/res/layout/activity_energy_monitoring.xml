@@ -41,6 +41,7 @@
                 android:textSize="24sp"
                 android:gravity="center_horizontal"
                 android:layout_margin="20dp"
+                android:paddingBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@id/topAppBar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -59,7 +60,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_energy_usage_title"
@@ -111,7 +113,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_current_title"
@@ -153,7 +156,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_frequency_title"
@@ -194,7 +198,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_power_factor_title"
@@ -235,7 +240,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_power_title"
@@ -276,7 +282,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_voltage_title"
@@ -312,6 +319,7 @@
                 android:textSize="24sp"
                 android:gravity="center_horizontal"
                 android:layout_margin="20dp"
+                android:paddingBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@id/cardView_voltage_usage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

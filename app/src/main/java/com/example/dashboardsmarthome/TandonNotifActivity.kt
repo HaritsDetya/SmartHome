@@ -83,13 +83,13 @@ class TandonNotifActivity : AppCompatActivity() {
     }
 
     private fun showNotification(title: String, message: String) {
-        val intent = Intent(this, FireNotifActivity::class.java).apply {
+        val intent = Intent(this, TandonNotifActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val fullScreenIntent = Intent(this, FireNotifActivity::class.java)
+        val fullScreenIntent = Intent(this, TandonNotifActivity::class.java)
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 0, fullScreenIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(this, channelId)

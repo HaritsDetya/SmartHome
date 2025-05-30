@@ -47,7 +47,7 @@ class BottomNavFrameActivity : AppCompatActivity() {
                     toolbar.visibility = View.VISIBLE
                 }
                 R.id.navigation_virtual -> {
-                    homeText.text = "Virtual"
+                    homeText.text = "EWS"
                     homeIcon.setImageResource(R.drawable._dcubeicon)
                     toolbar.visibility = View.VISIBLE
                 }
