@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.dashboardsmarthome.EnergyMonitoringActivity
 import com.example.dashboardsmarthome.R
@@ -23,6 +24,7 @@ import com.google.android.material.card.MaterialCardView
 class HomeFragment : Fragment() {
 
     private lateinit var weatherViewModel: WeatherViewModel
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -41,6 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+//        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         val adm4Code = "34.04.07.2001"
         weatherViewModel.getWeatherForecast(adm4Code)
@@ -123,6 +126,19 @@ class HomeFragment : Fragment() {
             }
         }
 
+        homeViewModel.powerData.observe(viewLifecycleOwner) { powerData ->
+            if (powerData != null) {
+                binding.textEnergyCost.text = "${powerData.energy ?: "--"} Kwh"
+                binding.valueTotalEnergyUsage.text = "${powerData.power ?: "--"}"
+                binding.valueDeviceEnergyUsage.text = "${powerData.voltage ?: "--"}"
+            } else {
+                binding.textEnergyCost.text = "-- Kwh"
+                binding.valueTotalEnergyUsage.text = "--"
+                binding.valueDeviceEnergyUsage.text = "--"
+                Log.e("HomeFragment", "Power data in HomeFragment is null. This indicates a deeper issue.")
+            }
+        }
+
         binding.cardViewWeather.setOnClickListener {
             val intent = Intent(requireContext(), WeatherForecastActivity::class.java)
             intent.putExtra("adm4_code", adm4Code)
@@ -135,16 +151,25 @@ class HomeFragment : Fragment() {
 
         energyCost.setOnClickListener {
             val intent = Intent(requireContext(), EnergyMonitoringActivity::class.java)
+            homeViewModel.powerData.value?.let {
+                intent.putExtra("power_data", it)
+            }
             startActivity(intent)
         }
 
         totalEnergyUsage.setOnClickListener {
             val intent = Intent(requireContext(), EnergyMonitoringActivity::class.java)
+            homeViewModel.powerData.value?.let {
+                intent.putExtra("power_data", it)
+            }
             startActivity(intent)
         }
 
         deviceEnergyUsage.setOnClickListener {
             val intent = Intent(requireContext(), EnergyMonitoringActivity::class.java)
+            homeViewModel.powerData.value?.let {
+                intent.putExtra("power_data", it)
+            }
             startActivity(intent)
         }
 
