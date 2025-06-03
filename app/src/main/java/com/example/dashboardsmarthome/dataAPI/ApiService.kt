@@ -4,10 +4,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("publik/prakiraan-cuaca")
-    suspend fun getWeather(
-        @Query("adm4") kodeAdm: String
-    ): WeatherResponse
+    @GET("prakiraan-cuaca")
+    suspend fun getWeatherForecast(@Query("adm4") adm4Code: String): WeatherResponse
 }
 
 

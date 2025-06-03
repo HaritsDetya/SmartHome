@@ -5,38 +5,47 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.dashboardsmarthome.dataAPI.NotificationHistoryManager
 import com.example.dashboardsmarthome.databinding.ActivityFireNotifBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.*
+import androidx.core.graphics.toColorInt
 
 class FireNotifActivity : AppCompatActivity() {
-    private lateinit var database: DatabaseReference
+//    private lateinit var database: DatabaseReference
     private lateinit var binding: ActivityFireNotifBinding
+    private lateinit var ewsViewModel: EWSViewModel
+
     private val channelId = "fire_alert_channel"
     private val notificationId = 101
-    private var firebaseConnected = true
-    private var lastDataReceivedTime: Long = System.currentTimeMillis()
-    private var dummyAlarmTriggered = false
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val dummyRunnable = object : Runnable {
-        override fun run() {
-            val timeSinceLastData = System.currentTimeMillis() - lastDataReceivedTime
+    private var navigationDestination: String = "menu"
 
-            if (timeSinceLastData > 1_000 && !dummyAlarmTriggered) {
-                showNotification("Peringatan Kebakaran", "Sensor lokal mendeteksi potensi kebakaran!")
-                dummyAlarmTriggered = true
-            }
+//    private var firebaseConnected = true
+//    private var lastDataReceivedTime: Long = System.currentTimeMillis()
+//    private var dummyAlarmTriggered = false
 
-            handler.postDelayed(this, 1_000)
-        }
-    }
+//    private val handler = Handler(Looper.getMainLooper())
+//    private val dummyRunnable = object : Runnable {
+//        override fun run() {
+//            val timeSinceLastData = System.currentTimeMillis() - lastDataReceivedTime
+//
+//            if (timeSinceLastData > 1_000 && !dummyAlarmTriggered) {
+//                showNotification("Peringatan Kebakaran", "Sensor lokal mendeteksi potensi kebakaran!")
+//                dummyAlarmTriggered = true
+//            }
+//
+//            handler.postDelayed(this, 1_000)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,49 +53,93 @@ class FireNotifActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         createNotificationChannel()
-
         NotificationHistoryManager.init(applicationContext)
 
-        if (intent.getBooleanExtra("trigger_fire_notification", false)) {
-            showNotification("Peringatan Kebakaran!", "Alarm kebakaran dipicu secara manual.")
-            finish()
-        }
+        ewsViewModel = ViewModelProvider(this)[EWSViewModel::class.java]
+
+//        if (intent.getBooleanExtra("trigger_fire_notification", false)) {
+////            showNotification("Peringatan Kebakaran!", "Alarm kebakaran dipicu secara manual.")
+//            ewsViewModel.triggerFireAlert(true)
+//            finish()
+//            return
+//        }
 
         val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
 
         binding.topAppBar.setNavigationOnClickListener {
             val intent = Intent(this, BottomNavFrameActivity::class.java)
-            intent.putExtra("start_destination", "ews")
+            intent.putExtra("start_destination", navigationDestination)
             startActivity(intent)
             finish()
         }
 
-        database = FirebaseDatabase.getInstance().getReference("FireAlert")
+//        database = FirebaseDatabase.getInstance().getReference("FireAlert")
+//
+//        database.child("detected").addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val detected = snapshot.getValue(Boolean::class.java)
+//                lastDataReceivedTime = System.currentTimeMillis()
+//                dummyAlarmTriggered = false
+//
+//                if (detected == true) {
+//                    showNotification("Peringatan Kebakaran!", "Sensor mendeteksi potensi kebakaran!")
+//                }
+//            }
+//
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                firebaseConnected = false
+//            }
+//        })
+//
+//        handler.postDelayed(dummyRunnable, 1000)
 
-        database.child("detected").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val detected = snapshot.getValue(Boolean::class.java)
-                lastDataReceivedTime = System.currentTimeMillis()
-                dummyAlarmTriggered = false
+        ewsViewModel.fireDetected.observe(this) { detected ->
+            binding.triggerSwitch.isChecked = detected
+            binding.tvFireStatus.text = if (detected) "Status: Kebakaran Terdeteksi!" else "Status: Aman"
 
-                if (detected == true) {
-                    showNotification("Peringatan Kebakaran!", "Sensor mendeteksi potensi kebakaran!")
-                }
-            }
+            binding.main.setBackgroundColor(ContextCompat.getColor(this,
+                if (detected) R.color.alert_danger else R.color.safe_status))
 
+            navigationDestination = if (detected) "ews" else "menu"
+        }
 
-            override fun onCancelled(error: DatabaseError) {
-                firebaseConnected = false
-            }
-        })
+        binding.triggerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            ewsViewModel.triggerFireAlert(isChecked)
+        }
 
-        handler.postDelayed(dummyRunnable, 1000)
+        ewsViewModel.fireNotificationEvent.observe(this) { message ->
+            showNotification("Peringatan Kebakaran!", message)
+        }
+
+//        ewsViewModel.fireDetected.observe(this) { detected ->
+//            binding.tvFireAlert.text = if (detected) "KEBAKARAN TERDETEKSI!" else "Tidak ada tanda kebakaran"
+//
+//            val colorResId = if (detected) R.color.alert_danger else R.color.safe_status
+//            binding.main.setBackgroundColor(ContextCompat.getColor(this, colorResId))
+//
+//            if (detected) {
+//                binding.topAppBar.setNavigationOnClickListener {
+//                    val intent = Intent(this, BottomNavFrameActivity::class.java)
+//                    intent.putExtra("start_destination", "ews")
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            } else {
+//                binding.topAppBar.setNavigationOnClickListener {
+//                    val intent = Intent(this, BottomNavFrameActivity::class.java)
+//                    intent.putExtra("start_destination", "menu")
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            }
+//        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(dummyRunnable)
+//        handler.removeCallbacks(dummyRunnable)
     }
 
     private fun showNotification(title: String, message: String) {

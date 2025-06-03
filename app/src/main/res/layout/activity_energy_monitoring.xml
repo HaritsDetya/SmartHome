@@ -12,6 +12,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -19,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="10dp">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -79,6 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
+                        android:text="Energy Usage"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_energy_usage_title"
@@ -175,6 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
+                        android:text="Frequency Usages"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_frequency_title"
@@ -217,6 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
+                        android:text="Power Factor Usages"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_power_factor_title"
@@ -248,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Power Factor Usages This Time"
+                        android:text="Power Usages This Time"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -259,6 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
+                        android:text="Power Usages"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_power_title"
@@ -278,7 +283,8 @@
                 android:layout_margin="16dp"
                 app:layout_constraintTop_toBottomOf="@id/cardView_power_usage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -301,6 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
+                        android:text="Voltage Usages"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/tv_voltage_title"

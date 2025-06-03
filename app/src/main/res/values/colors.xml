@@ -30,4 +30,7 @@
 
 <!--    Button-->
     <color name="button_primary">#C0C0C0</color>
+
+    <color name="alert_danger">#FFAFAF</color>
+    <color name="safe_status">#AAE6AD</color>
 </resources>

@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
-//        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         val adm4Code = "34.04.07.2001"
         weatherViewModel.getWeatherForecast(adm4Code)
@@ -128,15 +127,24 @@ class HomeFragment : Fragment() {
 
         homeViewModel.powerData.observe(viewLifecycleOwner) { powerData ->
             if (powerData != null) {
-                binding.textEnergyCost.text = "${powerData.energy ?: "--"} Kwh"
-                binding.valueTotalEnergyUsage.text = "${powerData.power ?: "--"}"
-                binding.valueDeviceEnergyUsage.text = "${powerData.voltage ?: "--"}"
+                binding.textEnergyCost.text = "${powerData.energy?.let { String.format("%.5f", it) } ?: "--"} Wh"
+                binding.valueTotalEnergyUsage.text = "${powerData.power?.let { String.format("%.2f", it) } ?: "--"} W"
+                binding.valueDeviceEnergyUsage.text = "${powerData.voltage?.let { String.format("%.3f", it) } ?: "--"} V"
             } else {
-                binding.textEnergyCost.text = "-- Kwh"
-                binding.valueTotalEnergyUsage.text = "--"
-                binding.valueDeviceEnergyUsage.text = "--"
+                binding.textEnergyCost.text = "-- Wh"
+                binding.valueTotalEnergyUsage.text = "-- W"
+                binding.valueDeviceEnergyUsage.text = "-- V"
                 Log.e("HomeFragment", "Power data in HomeFragment is null. This indicates a deeper issue.")
             }
+        }
+
+        homeViewModel.kontrolData.observe(viewLifecycleOwner) { kontrolData ->
+            val relay1Status = kontrolData?.relay1 == true
+            val relay2Status = kontrolData?.relay2 == true
+
+            initializeCardAppearance(binding.cardViewHomeBtn, R.id.icon_home_btn, R.id.title_home_btn, R.id.text_home_btn, requireContext(), relay1Status)
+            initializeCardAppearance(binding.cardViewNightModeBtn, R.id.icon_nightMode_btn, R.id.title_nightMode_btn, R.id.text_nightMode_btn, requireContext(), relay2Status)
+            initializeCardAppearance(binding.cardViewAwayModeBtn, R.id.icon_awayMode_btn, R.id.title_awayMode_btn, R.id.text_awayMode_btn, requireContext(), false)
         }
 
         binding.cardViewWeather.setOnClickListener {
@@ -173,51 +181,28 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        val isOnMap = mutableMapOf<Int, Boolean>()
-
-        isOnMap[R.id.cardView_home_btn] = false
-        isOnMap[R.id.cardView_nightMode_btn] = false
-        isOnMap[R.id.cardView_awayMode_btn] = false
-
-        val cardHome = view.findViewById<MaterialCardView>(R.id.cardView_home_btn)
-        val cardNight = view.findViewById<MaterialCardView>(R.id.cardView_nightMode_btn)
-        val cardAway = view.findViewById<MaterialCardView>(R.id.cardView_awayMode_btn)
-
-        initializeCardAppearance(cardHome, R.id.icon_home_btn, R.id.title_home_btn, R.id.text_home_btn, requireContext(), false)
-        initializeCardAppearance(cardNight, R.id.icon_nightMode_btn, R.id.title_nightMode_btn, R.id.text_nightMode_btn, requireContext(), false)
-        initializeCardAppearance(cardAway, R.id.icon_awayMode_btn, R.id.title_awayMode_btn, R.id.text_awayMode_btn, requireContext(), false)
-
-        cardHome.setOnClickListener {
-            toggleCardState(
-                cardView = cardHome,
-                iconId = R.id.icon_home_btn,
-                titleId = R.id.title_home_btn,
-                subtitleId = R.id.text_home_btn,
-                context = requireContext(),
-                isOnMap = isOnMap
-            )
+        binding.cardViewHomeBtn.setOnClickListener {
+            val currentRelay1Status = homeViewModel.kontrolData.value?.relay1 == true
+            homeViewModel.updateRelayStatus("relay1", !currentRelay1Status)
         }
 
-        cardNight.setOnClickListener {
-            toggleCardState(
-                cardView = cardNight,
-                iconId = R.id.icon_nightMode_btn,
-                titleId = R.id.title_nightMode_btn,
-                subtitleId = R.id.text_nightMode_btn,
-                context = requireContext(),
-                isOnMap = isOnMap
-            )
+        binding.cardViewNightModeBtn.setOnClickListener {
+            val currentRelay2Status = homeViewModel.kontrolData.value?.relay2 == true
+            homeViewModel.updateRelayStatus("relay2", !currentRelay2Status)
         }
 
-        cardAway.setOnClickListener {
-            toggleCardState(
-                cardView = cardAway,
+        binding.cardViewAwayModeBtn.setOnClickListener {
+            val cardId = binding.cardViewAwayModeBtn.id
+            val currentState = (binding.cardViewAwayModeBtn.tag as? Boolean) == true
+            toggleCardStateVisualOnly(
+                cardView = binding.cardViewAwayModeBtn,
                 iconId = R.id.icon_awayMode_btn,
                 titleId = R.id.title_awayMode_btn,
                 subtitleId = R.id.text_awayMode_btn,
                 context = requireContext(),
-                isOnMap = isOnMap
+                currentState = currentState
             )
+            binding.cardViewAwayModeBtn.tag = !currentState
         }
     }
 
@@ -235,17 +220,14 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun toggleCardState(
+    private fun toggleCardStateVisualOnly(
         cardView: MaterialCardView,
         iconId: Int,
         titleId: Int,
         subtitleId: Int,
         context: Context,
-        isOnMap: MutableMap<Int, Boolean>
+        currentState: Boolean
     ) {
-        val cardId = cardView.id
-        val currentState = isOnMap[cardId] == true
-
         val fromColor = ContextCompat.getColor(context, if (currentState) R.color.card_on else R.color.card_off)
         val toColor = ContextCompat.getColor(context, if (currentState) R.color.card_off else R.color.card_on)
 
@@ -268,7 +250,6 @@ class HomeFragment : Fragment() {
         title.setTextColor(ContextCompat.getColor(context, textColor))
         subtitle.setTextColor(ContextCompat.getColor(context, textColor))
 
-        isOnMap[cardId] = !currentState
     }
 
     private fun initializeCardAppearance(

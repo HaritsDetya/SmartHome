@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dashboardsmarthome.BottomNavFrameActivity
+import com.example.dashboardsmarthome.EWSViewModel
 import com.example.dashboardsmarthome.R
 import com.example.dashboardsmarthome.dataAPI.NotificationHistoryManager
 import com.example.dashboardsmarthome.databinding.ActivityWeatherForecastBinding
@@ -31,31 +32,19 @@ import java.util.Locale
 
 class WeatherForecastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWeatherForecastBinding
-    private lateinit var viewModel: WeatherViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var ewsViewModel: EWSViewModel
     private lateinit var adapter: WeatherAdapter
 
     private lateinit var database: DatabaseReference
     private val channelId = "weather_alert_channel"
     private val notificationId = 103
-    private var firebaseConnected = true
-    private var lastDataReceivedTime: Long = System.currentTimeMillis()
-    private var dummyAlarmTriggered = false
-    private var latestWeatherDescription: String? = null
-    private var lastNotifiedWeatherDescription: String? = null
 
-    private val handler = Handler(Looper.getMainLooper())
-//    private val dummyRunnable = object : Runnable {
-//        override fun run() {
-//            val timeSinceLastData = System.currentTimeMillis() - lastDataReceivedTime
-//
-//            if (timeSinceLastData > 1_000 && !dummyAlarmTriggered) {
-//                showNotification("Peringatan Hujan (Dummy)", "Sensor lokal mendeteksi potensi hujan!")
-//                dummyAlarmTriggered = true
-//            }
-//
-//            handler.postDelayed(this, 1_000)
-//        }
-//    }
+//    private var firebaseConnected = true
+//    private var lastDataReceivedTime: Long = System.currentTimeMillis()
+//    private var dummyAlarmTriggered = false
+//    private var latestWeatherDescription: String? = null
+//    private var lastNotifiedWeatherDescription: String? = null
 
     private val MAX_FORECAST_ITEMS_TO_DISPLAY = 7
 
@@ -65,20 +54,21 @@ class WeatherForecastActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         createNotificationChannel()
-
         NotificationHistoryManager.init(applicationContext)
+
+        weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+        ewsViewModel = ViewModelProvider(this)[EWSViewModel::class.java]
+
+        adapter = WeatherAdapter(emptyList())
+
+        binding.recyclerViewForecast.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewForecast.adapter = adapter
 
         if (intent.getBooleanExtra("trigger_weather_notification", false)) {
             val weatherDesc = intent.getStringExtra("weather_description") ?: "Tidak diketahui"
             sendWeatherNotification(weatherDesc)
             finish()
         }
-
-        viewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
-        adapter = WeatherAdapter(emptyList())
-
-        binding.recyclerViewForecast.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewForecast.adapter = adapter
 
         val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleBold)
@@ -92,58 +82,23 @@ class WeatherForecastActivity : AppCompatActivity() {
 
         val adm4Code = intent.getStringExtra("adm4_code") ?: "34.04.07.2001"
 
-        observeViewModel()
-        viewModel.getWeatherForecast(adm4Code)
-
-        database = FirebaseDatabase.getInstance().getReference("WeatherAlert")
-
-        database.child("detected").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val detected = snapshot.getValue(Boolean::class.java)
-                lastDataReceivedTime = System.currentTimeMillis()
-                dummyAlarmTriggered = false
-
-                if (detected == true) {
-                    latestWeatherDescription?.let {
-                        sendWeatherNotification(it)
-                    } ?: run {
-                        Log.w("WeatherForecast", "Detected true from Firebase but latestWeatherDescription is null.")
-                    }
-                }
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                firebaseConnected = false
-                Log.e("WeatherForecast", "Firebase connection cancelled: ${error.message}")
-            }
-        })
-
-//        handler.postDelayed(dummyRunnable, 1000)
-    }
-
-    private fun observeViewModel() {
-        viewModel.weatherData.observe(this) { weatherResponse ->
+        weatherViewModel.weatherData.observe(this) { weatherResponse ->
             if (weatherResponse != null && weatherResponse.data.isNotEmpty()) {
                 val weatherDataWrapper = weatherResponse.data.firstOrNull()
 
                 if (weatherDataWrapper != null && weatherDataWrapper.cuaca.isNotEmpty()) {
                     val allFlattenedForecasts = weatherDataWrapper.cuaca.flatten()
-                    Log.d("WeatherForecast", "Total item perkiraan cuaca (per 3 jam) tersedia: ${allFlattenedForecasts.size}")
-
                     val forecastsToDisplay = allFlattenedForecasts.take(MAX_FORECAST_ITEMS_TO_DISPLAY)
-                    Log.d("WeatherForecast", "Jumlah item yang akan ditampilkan (setelah take): ${forecastsToDisplay.size}")
 
                     if (forecastsToDisplay.isNotEmpty()) {
                         adapter.updateData(forecastsToDisplay)
-
-                        latestWeatherDescription = forecastsToDisplay.first().weatherDesc
-
-                        sendWeatherNotification(latestWeatherDescription)
-
                         binding.recyclerViewForecast.visibility = View.VISIBLE
                         supportActionBar?.title = "${weatherResponse.lokasi.desa}, ${weatherResponse.lokasi.kotkab}"
                         binding.textEmptyMessage.visibility = View.GONE
+
+                        // Trigger notifikasi cuaca melalui EWSViewModel
+                        val latestWeatherDescription = forecastsToDisplay.first().weatherDesc
+                        ewsViewModel.getWeatherForecastAndCheckForAlert(adm4Code) // Memanggil ViewModel untuk cek & picu notif
                     } else {
                         showEmptyMessage("Tidak ada data cuaca yang relevan tersedia.")
                     }
@@ -154,18 +109,87 @@ class WeatherForecastActivity : AppCompatActivity() {
                 showEmptyMessage("Gagal memuat data cuaca atau respons kosong.")
             }
         }
+
+        ewsViewModel.weatherNotificationEvent.observe(this) { weatherDesc ->
+            sendWeatherNotification(weatherDesc)
+        }
+
+        weatherViewModel.getWeatherForecast(adm4Code)
+
+//        observeViewModel()
+//        viewModel.getWeatherForecast(adm4Code)
+//
+//        database = FirebaseDatabase.getInstance().getReference("WeatherAlert")
+//
+//        database.child("detected").addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val detected = snapshot.getValue(Boolean::class.java)
+//                lastDataReceivedTime = System.currentTimeMillis()
+//                dummyAlarmTriggered = false
+//
+//                if (detected == true) {
+//                    latestWeatherDescription?.let {
+//                        sendWeatherNotification(it)
+//                    } ?: run {
+//                        Log.w("WeatherForecast", "Detected true from Firebase but latestWeatherDescription is null.")
+//                    }
+//                }
+//            }
+//
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                firebaseConnected = false
+//                Log.e("WeatherForecast", "Firebase connection cancelled: ${error.message}")
+//            }
+//        })
+
+//        handler.postDelayed(dummyRunnable, 1000)
     }
 
+//    private fun observeViewModel() {
+//        viewModel.weatherData.observe(this) { weatherResponse ->
+//            if (weatherResponse != null && weatherResponse.data.isNotEmpty()) {
+//                val weatherDataWrapper = weatherResponse.data.firstOrNull()
+//
+//                if (weatherDataWrapper != null && weatherDataWrapper.cuaca.isNotEmpty()) {
+//                    val allFlattenedForecasts = weatherDataWrapper.cuaca.flatten()
+//                    Log.d("WeatherForecast", "Total item perkiraan cuaca (per 3 jam) tersedia: ${allFlattenedForecasts.size}")
+//
+//                    val forecastsToDisplay = allFlattenedForecasts.take(MAX_FORECAST_ITEMS_TO_DISPLAY)
+//                    Log.d("WeatherForecast", "Jumlah item yang akan ditampilkan (setelah take): ${forecastsToDisplay.size}")
+//
+//                    if (forecastsToDisplay.isNotEmpty()) {
+//                        adapter.updateData(forecastsToDisplay)
+//
+//                        latestWeatherDescription = forecastsToDisplay.first().weatherDesc
+//
+//                        sendWeatherNotification(latestWeatherDescription)
+//
+//                        binding.recyclerViewForecast.visibility = View.VISIBLE
+//                        supportActionBar?.title = "${weatherResponse.lokasi.desa}, ${weatherResponse.lokasi.kotkab}"
+//                        binding.textEmptyMessage.visibility = View.GONE
+//                    } else {
+//                        showEmptyMessage("Tidak ada data cuaca yang relevan tersedia.")
+//                    }
+//                } else {
+//                    showEmptyMessage("Data perkiraan cuaca tidak ditemukan dalam respons.")
+//                }
+//            } else {
+//                showEmptyMessage("Gagal memuat data cuaca atau respons kosong.")
+//            }
+//        }
+//    }
+
     private fun sendWeatherNotification(weatherDesc: String?) {
-        if (weatherDesc == null || weatherDesc == lastNotifiedWeatherDescription) {
-            return
-        }
+//        if (weatherDesc == null || weatherDesc == lastNotifiedWeatherDescription) {
+//            return
+//        }
 
         val title: String
         val message: String
         val smallIconResId: Int
 
-        when (weatherDesc.lowercase(Locale.ROOT)) {
+        when (weatherDesc?.lowercase(Locale.ROOT)) {
             "cerah", "cerah berawan" -> {
                 title = "Cuaca Cerah!"
                 message = "Cuaca saat ini sedang cerah, semoga hari Anda cerah selalu!"
@@ -198,8 +222,7 @@ class WeatherForecastActivity : AppCompatActivity() {
             }
         }
 
-        lastNotifiedWeatherDescription = weatherDesc
-
+//        lastNotifiedWeatherDescription = weatherDesc
         showNotification(title, message, smallIconResId)
     }
 
@@ -208,11 +231,6 @@ class WeatherForecastActivity : AppCompatActivity() {
         binding.textEmptyMessage.visibility = View.VISIBLE
         binding.textEmptyMessage.text = message
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        handler.removeCallbacks(dummyRunnable)
-//    }
 
     private fun showNotification(title: String, message: String, smallIconResId: Int) {
         val intent = Intent(this, WeatherForecastActivity::class.java).apply {
